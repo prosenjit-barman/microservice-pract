@@ -1,0 +1,253 @@
+API is application Programming Language. API aren't only used to send data. Can mean many different things. 
+Rest= Representational state Transfter way of building api in a logical way making them easy to consume. Can build for others or ourselves.
+REST Principles:
+1. Separate API into logical resources.
+2. Expose Structured resource based url
+3. Should write proper http method
+4. Send data as JSON
+5. Must be stateless(When the client makes an HTTP request, i must need to be includes all information necesary for the server to fulfill the requests)
+
+Resource is object or representation of something which has data associated to it.
+Endpoint should only contain only resources(nouns), and use HTTP methods for actions!
+/getTour(Endpoint): get the data of tour whenever a get request was made. The Verb is HTTP method(get)
+JSON: everything needs to be strings. 
+JSEND: to display the data is available or not. a status actually.
+
+stateless: All state is handled on the client. The server doesn't need to remember the previous states of the client.
+
+Essence of Express development: Request response Cycle:
+Middleware: Manipulate Request or the Response object or execute any other code.
+Mostly about the request.
+
+Param Middleware: Runs only for specific parameter
+
+Each Router is a mini/sub application for each resource. If a middleware is defined for specific router, that middleware will only work for that specific router.
+controller is the Handler. Handler is where we defined the response
+
+Serving Static file using Express:
+express serve middleware is used
+
+Environment Variables:
+Development and production environment. Things that are not related to express will be done on outside of the express files. Need to setup the environment variable on Server file.
+process core module
+many packages depend on special variable named: node-env(dev or prod). Express doesn't provide that variable. for that reason, we need to create it manually.
+if we need to set a environment variable before starting the process, we need to prepend before we start the process. 
+To do so, need to enable the production environment from powershell: $env:NODE_ENV="development" then npm start
+need to create a config.env file where we will include the environment variables. dotenv package is also required in this case, then need to incoude that on the server file
+
+Airbnb style guide for Javascript
+To make the AIrbnb style to work properly, 3 more plugin required and they are eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react
+
+
+MONGODB--
+Database- noSQL compared to Relational DB
+one or more collections. collection is a Table of data. Each collections can contain more data structure called documents. Document is a row of the table.
+each documents contain a one single entity. Document has data format as JSON.
+
+Features:
+1. Document based Database store data as JSON(value pair data structure). Instead of rows, it is a NoSQL database not a relational one.
+2. Scalable- very easy to distribute data across multiple machines
+3. Flexible= no document data schema required. meaning each document can have different numbers and type of fields
+4. performant- embedded data models, indexing and so on.
+5. published under the sspl icense
+
+Documents:
+A data format similar to JSOn for data storage that is BSON. For like JSON but have a data type like string, number, boolean etc.
+Multiple value can be inserted which requires lots of work in RDB
+Embedded document which is not present in RDB. Embedded documents is basically an array with objects as documents.
+
+oposite of Embedding is Normalizing in RDB.
+
+Creating a Database using Mongo Shell:
+on the CMD, type mongo and enter
+then - use dbname  this command will create a db and switched to that db
+inserting documents inside a collection.
+>db.collectionname.insertMany({The object will be written here})//db means the current database, collectionname means the table, insertMany() function will insert more than one document inside the collection, need to defined [] before the {}. In case of one data, we will use insertOne()
+>db.collectionname.find() //to display all the available data inside a table
+>show dbs //to see the available databses
+>use dbName //to switch to another database
+>show collections //to display the existing tables or collections of a table
+>quit() //to quit the shell
+
+-QUERYING
+>db.tours.find({need to enter the data that will be used for filtering. like: name: "The forest Hiker"})
+Query Operator: if multiple query need to define
+if need to search for something less than 500 price, then the query will be
+>db.tours.find({price: {$lte: 500} }) //$lte is operator stands for less than or equal. $ is mongo operator. in case of multiple query, need to define seperately. Like price: {$lt: 500}, rating: {$gt: 4.8}
+Or Statement defining in MONGODB
+>db.tours.find({ $or: [ {price: {$lt:500}}, {rating: {$gte: 4.8}} ]})
+
+-Updating
+Need to select which document then need to pass in the data that should be updated
+>dd.tours.updateOne({ name: "The Snow Adventurer"}, {$set : {price: 597}}) //$set is operator to update a property
+
+==MONGOOSE=> NodeJS driver for mongodb. All about models. Model is like a blueprint to create and use documents. Create models based on schema.
+
+Application Architecture=> MVC(Backend) More modular application which is more easier to Scalable
+Model=>Application data and business logic
+View=> Graphical interface of the site. Templating and presentation logic
+controller=> Handle application request, interact with model and send back responses to the client. Application logic
+
+Start with request, which will hit the router. goal of router to route the request to correct handler function which is mainly controller. One controller for each resources which  will keep the part of the app separated
+controller will intereact with model to retrive data. One model file for each resource. After getting the data from model, controller will select one of the view and inject the data
+After the data from model, the controller is ready to send response if everything is okay. 
+
+Goal of MVC is= Separate Business Logic from Application Logic
+application logic is the code only concern about the app implementation, not the underlying business problem that we are trying to solve using the Application. 
+managing request and responses are Application Logic. It is a Technical Part. Bridge between model and view layes.
+Application logic wil be in controller
+
+business logic that solves the business problem that we set out to solve. directly related to business rule.
+business logic will be in model
+
+In order to access the document, we need to use then() function. Instead of using promises we can use async and await function. need to write async prior to the argument and need to include await to parse the promise
+
+all type of find() methods are query methods
+
+In RESTAPI, it is not wise to display what actually deleted
+
+In mongoose, there are two ways to write db queries.
+1. Just use a filter object
+2. some special mongoose methods
+
+NB: Match parameter needs to be included in curly braces{}
+writing a query string including operators in url
+before the equal= need to include the operator(gte)
+for ex: .com/duration[gte]=5
+
+Sorting by ascending price parameter will be: sort=price
+Sorting by descending price parameter will be: sort=-price
+
+API Aliasing
+5 best and cheapest tours
+
+MongoDB Aggregaion pipeline
+
+Virtual Property: Fields that we can defined but the data will not be saved in the Database
+
+Document Middleware(mongoose):
+between two events. Each time a document is getting saved on Database, we can run a function between the saved command issued and actual saving. Pre and Post Hooks.
+4 types of middleware:
+1. Document, 2.query, 3.Aggregate, 4.Model
+
+pre function will display data before saving on the database so that we can do something with the document.
+
+slug for each of the documents.slug is a string that we can put in the url. In order to make the slug work, we need to defined the slug in the schema.
+
+query middleware: allows us to run a function before and after a query
+
+Aggregaion Middleware: allows us to add hook before or after aggregation
+
+Validating data using Mongoose:
+validation is the process of checking the values if those are entered in right format.
+sanitization: making sure that the input data is clean and no malicious data there. Never ever except every data incoming from user end without sanitization.
+Data Validation needs to be done on the model. that is because FAT model and thin controller philosophy.
+custom validator: Will return true or false
+
+====Error Handling====
+Debugging NodeJS: We can use NDB by google to debug Node App. A chrome debugger will start which will be replica of the code environment
+On debugger, if we set a breakpoint, then all the codes will stop running on that specified breakpoint
+
+Handling undefined routes.
+If no reoute defined, a 404 page will be displayed
+creating an handler function that doesn't have any route specified
+
+Error handling in express:
+1. operation errors: We need to handle them advance like invalid path, validation, server connection error, db connection error etc.
+2. programming errors: that developers introduced in code. reading properties of undefined, passing number where an object is expected, await without async etc
+
+Global Error Handling Middleware need to define to standarized the error handling.
+Stack Trace: will display specifically where the error is happening
+
+catching asynchronous function and defining them in a functional way
+
+different error messages based on development environment.
+ Operation error should always be sent to the client. Not programming errors/.
+ 
+Unhandled rejections:
+DB connection issue. For example, DB connection error, down etc.
+
+Uncaught Exceptions:
+Something that doesn't exists. If there is any uncaught exception, the entire application becomes in unclear state. We need to crash down the application soon its find the uncaught exception
+
+All About Users:
+USer signing up, sign in and all about authorizations
+ Managing user password:
+ first validate with confiorming, then, encryptions
+ never ever store plain password in Database. it always need to be encrypted
+
+To encrypt password, we are going to use Bcrypt. This will Salt the password and then hash. It prevents from Bruteporce attacks.
+Salt means adding random strings that will not generate same hash.
+
+JSON Web Token:
+Login user and access management. Modern, simple and secure approach is JWT
+
+no need to store any session state on the server which is perfect for RESTful API. Stateless.
+how auth works with:
+When a client tries to login, the credentials goes to server and if that matches, a unique JWT
+for only that user will  be created using secret string. Which will not be stored anywhere in the server. Stateless
+
+JWT then send back to the that will be stored as cookie or in local storage. The user is authenticated and logged in to the application without leaving state.
+Works like a passport. access protected part of the application. If the user want to access any protected part of the application, it send a request with JWT and the route.
+Once the request hits the server, App will verify if the JWT is valid or not. 
+If token is valid, requested data will be sent, if not, will show that the user is not allowed to see the data. must need to be handled over HTTPS. 
+
+JWT is encoded string made up on 3 parts:
+1. Header: Metadata about the token
+2. Payload: data that encode into token
+3. Signature: crreated using the Header, Payload and secret that is saved on the server. Which is signing the Webtoken
+
+Signing: Takes the header, payload and secret and creates a unique signature.
+Header, Payload and Signature together forms the JWT. Then it get send to the User.
+Once the server recieved the JWT, it needs to be verified. That means the Header and Payload data is unchanged. No third party altered anything there.
+
+Verification: Once the JWT is received, that Secret will be still stored on the server, Header, Payload and that secret create a test Signature,
+Later that test signature was compared with the Original Signature. if they matched, they are authenticated.
+
+Signing in is the main part of Authentication.
+User data is stake. very very crutial part. Wellknown is passport library.
+
+Private key only stored on the server.
+
+jwt.sign requires payload. Payload is the object of all the data that we want to store inside the token.
+Secret will be place after the payload. Secret need to be atleast 32 charcters long.
+
+After a sign, a expire token need to be define
+
+user login based on email and password
+Instance Method: Is basically a method that will be available for all the Documents of a certain collections
+
+Protected Routes:
+Giving access based on login and Token.
+Route needs to be protected through middleware
+Getting Token and check if it's there: Common practice is sending the Token with an HTTP header with the request. We need to set header using Postman to send the token along with the request then also access to the header
+Sending JSON web token in header
+
+Verification of the Token: If someone manipulated data or the token is expired
+
+Instance Method: The method that will be availbe for all document. Required to check, if the password is changed, the token must also be changed
+
+Environment Concept of Postman: Environment is a context where app is running. We can also assign a variable for each environment. In environment, URL is important variable. URL for production and dev must need be separated.
+Need to create environment from the Postman. After creating the environment, need to use the environment variable with curly braces. Like this way: {{URL}}
+In order to use the token recieved after login to access a route, Need to setup tests in Postman and assign an environment variable
+After that, on the authorization tab, we need to select the bearer token and place that environment variable generated after a login.
+
+Authentication is not enough. Authorization need to be implemented properly.
+certain user has rights to interact a certain resource.
+
+middleware to restrict certain routes.
+can't pass arguments in middleware functions.
+
+Password reset Functionality: based on email, we can change the password. Password reset token is not a JWT.
+To reset the password, first of all, need to validate the user
+then a reset token will be generated for that user. This can be genrate using built in library named crypto.
+user only will have access to this. Just like password, we should never store reset token without encryption. The reset password need to be encrypted.
+
+The password reset token will be sent to the email unencrypted. the encrypted one will be stored in the database
+
+Nodemailer is a package to send email from application.
+To test the mail, we can do using mailtrap.
+
+In case of using nodemailer, we first need to setup the Transporter. That will handle the mail delivery.
+After configuring the Transporter. we need to define option like from where the email is coming from, who is the sender etc.
+after that, need to enable the Transporter to send the email.
