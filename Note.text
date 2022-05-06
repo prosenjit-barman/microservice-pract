@@ -251,3 +251,55 @@ To test the mail, we can do using mailtrap.
 In case of using nodemailer, we first need to setup the Transporter. That will handle the mail delivery.
 After configuring the Transporter. we need to define option like from where the email is coming from, who is the sender etc.
 after that, need to enable the Transporter to send the email.
+
+deleting an user means setting an accout deactive. 
+
+In Postman output, we will not display the user active status. 
+
+Security Best practices-
+compromised Database= Extremely severe problem. To prevent, password and password reset token needs to be encrypted.
+
+Brute Force attacks: millions of password to gain access. To prevent, make the login request slow.
+rate limiting- limiting the number of request from one single IP. Maximum login attempts.
+
+Cross Site Scripting: tries to inject scripts on page to run malicious code. it allows the attacker to read local storage. That is why we should never stored JWT on local storage.
+instead, it should be stored in HTTP only cookie that makes it so the browser can receive and send the cookie but can't be modified. to prevent xss, need to sanitize the user input data.
+and set some special HTTP headers. Middleware will be used to reate such headers.
+
+Denial of service attack: so many request sent to server so that the server breaks down and it becomes unavailable. Rate limiting is a good solution. Limiting the body data and avoiding evil regular expression to prevent such attacks.
+
+NoSQL Query Injection: instead of inputing valid data, injects some query. Mongoose helps preventing such attacks. A good schema prevents such attacks to place and also sanitization requires.
+
+*Server and Client communication should be happend over HTTPS
+*Random Password reset token with expiry dates
+*Deny access to HWT after password change
+*never commit any sensitive config file
+*Don't send error details to clients
+*using csurf package to prevent cross site request forgery. Forces user to execute unwanted actions on Web app the user logged in.
+*blacklist of untrusted tokens
+*confirming email
+*keep user logged in with refresh tokens
+*2FA
+*prevent parameter pollution
+
+Sending JWT via Cookie. Browser will save it in a more secured way.
+Cookie is a small piece of text that server sends to client. when client receives the cookie, its will be automatically stored and 
+automatically send all the future requests to the same server. browser automatically stored that. 
+
+Implementing Rate Limit to prevent same IP creating so many request to our API.
+Rate limiter will be implemented in a middleware. going to use a package named express rate limiter
+
+Important security HTTP headers. needs to be setup using express package named helmet.
+
+Data Sanitization: means to clean that comes into the application from malicious code, that trying to attack application.
+after the data comes in, we will sanitize the data. right after the body parser.
+
+NoSQL attack example: instead of adding a mail, we can login by knowing the password.
+the on the email field, just need to include this query: { $gt: "" }. If we have the password, we can easily log in.
+To protect application from such attacks, we are going to use package named express-mongo-sanitize. To prevent HTML from the input fields, we are using the XSS package.
+
+preventing parameter polution: remove duplicate fields from the URL. The package we are going to use is HPP(HTTP parameter polution)
+
+
+
+

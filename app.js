@@ -1,6 +1,10 @@
-/* eslint-disable prettier/prettier */
 const express = require('express');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const AppError = require('./utils/appError');
 const GlobalErrorhandler = require('./controllers/errorController');
@@ -9,15 +13,50 @@ const userRouter = require('./routes/userRoutes');
 //require express
 const app = express();
 
+// 1) GLOBAL MIDDLEWARES
+//Important security HTTP Header
+app.use(helmet());
+
 console.log(process.env.NODE_ENV);
+//Dev Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } //Will only display the log in Development environment.
 
+//Rate Limiter for same API
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: "Too Many requests from this IP. Please Try again in an hour."
+});//rate limit is a function that recieves objects as options. Maximum of 100 api request in one hour.
+
+app.use('/api', limiter);
+
 //Defining Middleware
-app.use(express.json()); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response.
+//Body Parser. Reading data from body into req.body
+app.use(express.json( { limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted.
+
+//Data Sanitization against NoSql query injection
+app.use(mongoSanitize()); //this middleware will check req.body, req.querystring and req.params and filtered out all of the $ sign and dots. By removing them, they are not longer gonna work. 
+
+//Data sanitization for XSS attacks.
+app.use(xss()); //This xss function will remove any malicious HTML from the input fields to porevent xss attacks.
+
+//Prevent Paramater polution
+app.use(hpp({
+  whitelist: [
+    'duration', 
+    'ratingsQuantity', 
+    'ratingsAverage', 
+    'maxGroupSize', 
+    'difficulty', 
+    'price'
+  ]
+})
+);
 
 //Accesing the Static Files on other folder. Middleware defined, static fuction of express default Middleware
+//serving static file
 app.use(express.static('./public')); //Public folder is already set to root
 
 //Creating Middleware

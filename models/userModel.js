@@ -45,7 +45,12 @@ const userSchema = new mongoose.Schema({
       type: Date
   },
   passwordResetToken: String,
-  passwordResetExpires: Date
+  passwordResetExpires: Date,
+  active: {
+      type: Boolean,
+      default: true,
+      select: false
+  }
   
 });
 
@@ -69,6 +74,13 @@ userSchema.pre('save', function(next) {
     this.passwordChangedAt = Date.now() - 1000;
     next();
 });
+
+//Query middleware for not showing the deactivated users in result
+userSchema.pre(/^find/, function(next) {
+    //THIS POINTS TO THE CURRENT QUERY
+    this.find({active: { $ne : false } });
+    next();
+}); //this middleware function will be applied to the query starts with find. /^find/ is a regular expression that will look for find
 
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
     return await bcrypt.compare(candidatePassword, userPassword);//compare function will compare candidate password and user password and return true or false
