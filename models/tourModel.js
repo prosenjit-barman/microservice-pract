@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+// const User = require('./userModel');
 //const validator = require('validator');
 
 
@@ -79,8 +80,48 @@ const tourSchema = new mongoose.Schema({
     secretTour: {
       type: Boolean,
       default: false
+    },
+    //Embedded Doc of Tour Start
+    startLocation: {
+      //GeoJson
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point']
+        //Always start with capital letter.
+      },
+      coordinates: [Number],
+      address: String,
+      description: String
+    },
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number
+      }
+    ],
+    //Embedded Doc of Tour End
+//Referencing
+    guides: [
+      {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User'
     }
-  },//schema definition
+    ]
+    //Embedded Doc of User Start
+    //guides: Array,
+
+    //Referencing
+    
+  },
+  //schema definition
   //Schema options
   {
     toJSON: { virtuals: true },
@@ -97,6 +138,13 @@ const tourSchema = new mongoose.Schema({
     //console.log(this);
     next();
   });//this is the currently processed document. Pre save hook
+
+  // Embedding Users with Tours
+  //tourSchema.pre('save', async function(next) {
+  //   const guidesPromises = this.guides.map(async id => await User.findById(id));
+  //   this.guides = await Promise.all(guidesPromises);
+  //   next();
+  // });
 
   // tourSchema.pre('save', function(next) {
   //   console.log('Will save document...');
@@ -118,6 +166,15 @@ const tourSchema = new mongoose.Schema({
   
     });
 
+    tourSchema.pre(/^find/, function(next) {
+      
+    this.populate({
+      path: 'guides',
+      select: '-__v -passwordChangedAt'
+    });
+
+    next();
+  });
     //POST QUERY MIDDLEWARE
     tourSchema.post(/^find/, function(docs, next) {
       //tourSchema.pre('find', function(next) {

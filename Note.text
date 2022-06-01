@@ -299,7 +299,74 @@ the on the email field, just need to include this query: { $gt: "" }. If we have
 To protect application from such attacks, we are going to use package named express-mongo-sanitize. To prevent HTML from the input fields, we are using the XSS package.
 
 preventing parameter polution: remove duplicate fields from the URL. The package we are going to use is HPP(HTTP parameter polution)
+MongoDB data modeling: unstructured data structuring.
 
+1. Different types of relationships between data
+2. Referencing/normalization vs embedding/denormalization
+3. Embedding or Referencing other documents
+4. Types of Referencing
 
+Types of relationships between data:
+one to one: basically one field only have one value.
 
+One to many:==> one doc can relate to many other docuemnts. 
+.One to few: one doc can relate to few document
+.one to many: one doc can relate to hundred/thousand document
+.one to ton: one doc can relate to millions document
 
+many to many: many doc can relate to many doc
+
+2. Referencing vs Embedding: 
+Referencing/normalized: two related datasets and all the docyuments seprated. data nicely separeted what eactly normalized means. Child Referencing takes place here/
+data can be sperated by using an ID.
+Embedded/denormalized:  denormalizing the form by embedding the documents right into the main document. All main data will be in a specific docuemnts including the related data.
+
+We always need to chose the normalized design.
+
+When to embed and when to reference dataset:
+
+Based on Relationship Type(How do the datasets are related):
+- When we have 1 to few relationship, we will always embed the related dataset into the main dataset
+- When we have 1 to many relationship, it either can be embed or referenced. But in that case, we need to decide what to choose based on other criterias.
+- 1 to ton or many to many need to reference the data. if embed, a large dataset will be created
+
+Based on Data access patern(How often the data is read/write): 
+- IF dataset are mostly read and data not updated a lot, we should embed the dataset. High read write ratio. Data requires lot more reading than writing in embedded dataset.
+By embedding we need one trip in database per query. In Referencing, we need two trips.
+
+- If data is updating a lot, we will choose referencing. In referencing/normaliziation, data changes frequently.
+
+Based on Data Closeness(How much the data is related):
+- If Dataset belongs together, they should be embedded.
+- If we frequently need to query both datasets on their own, we should normalize the data.
+
+If we choose Referencing, we still need to choose from three different types.
+- Child Referencing: We basically keep references to the related child documents in a parent document and they usually stored in a array. each log will have an ID and in the main document there will be in an Array which included the ID. Parents and child are tightly coupled. One to Few Relation.
+- Parent Referencing: In each child document, we keep a reference to the parent element. Therefore the name is parent referencing. It is the best solution for data modeling.
+- Two Way Referencing: for many to many relationship. data are connceted in a two way relation. 
+
+Designing Data Model: https://d.pr/i/QmG977
+Following are the datasets:
+Tours,
+Locations,
+Users,
+Reviews,
+Bookings.
+
+Relationship between user and reviews dataset will be 1:MANY relationship. Users are Parent, Reviews are Child. Parent referencing.
+Relationship between tours and reviews will be 1:MANY. Parent Referencing
+Relationship between tours and locations will be FEW:FEW Relationship. Embedding.
+Relationship between tours and users will be Few to Few relationship. Can be reference by child or embed.
+
+Modeling Data for Location(Geospatial).
+Geospatial data is basically describing location based on Altitude and latitude.
+GROJson to specify geospatial data
+
+In order to specify a location, we always going to use $_dirname. it is the safe method to locate the file.
+While using Enum inside the DB object, type will be string and the array data of Enum will start with Capital Letter.
+
+If the GeoJson is included, it is a requirement of Mongo is to include the coordinates objects as well. otherwise, it will not parese.
+
+Embedded users with the Tours 
+
+Populating- In order to get access to reference tour guides.
