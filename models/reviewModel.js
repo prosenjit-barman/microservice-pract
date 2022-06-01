@@ -1,5 +1,6 @@
 //Review / Rating / Created At / ref to User / ref to Tour
 const mongoose = require('mongoose');
+
 const reviewSchema = new mongoose.Schema(
     {
         review: {
@@ -32,6 +33,17 @@ const reviewSchema = new mongoose.Schema(
         toObject: { virtuals: true }
     });
 
+    reviewSchema.pre(/^find/, function(next) {
+        this.populate({
+            path: 'tour',
+            select: 'name'
+        }).populate({
+            path: 'user',
+            select: 'name photo'
+        })
+
+        next();
+    })
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;

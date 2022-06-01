@@ -10,6 +10,7 @@ const AppError = require('./utils/appError');
 const GlobalErrorhandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 //require express
 const app = express();
 
@@ -131,6 +132,7 @@ app.use((req, res, next) => {
 //Mounting Router comes after defining all the variable
 app.use('/api/v1/tours', tourRouter); //connecting new router to the application using Middleware,tourRouter(Mounting)
 app.use('/api/v1/users', userRouter); //connecting new router to the application using Middleware,userRouter(Mounting)
+app.use('/api/v1/reviews', reviewRouter); //connecting new router to the application using Middleware,userRouter(Mounting)
 
 //ROUTE HANDLER FOR UNDEFINED CONTROLLERS OR HANDLER FUNCTIONS
 //This is defined after the tour router because of effective use od the middleware
