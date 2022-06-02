@@ -14,20 +14,6 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 };
 
-//Route Handler for USERS- Display All Users
-exports.getAllUsers = catchAsync(async (req, res, next) =>{
-    const users = await User.find();
-
-        //SEND RESPONSE
-        res.status(200).json({
-            status: 'Success',
-            //requestedAt: req.requestTime,
-            results: users.length,
-            data: {
-                users
-            } //JSEND DATA SPECIFICATION
-        });
-});
 
 //Updating the User Data
 exports.updateMe = catchAsync( async (req, res, next) => {
@@ -72,31 +58,25 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     });
 });
 
-//Route Handler for USERS- disply user by id
+//Route Handler for USERS- Display All Users
+exports.getAllUsers = factory.getAll(User);
 
-exports.getUser = (req, res) =>{
-    res.status(500).json({
-        Status: "Error",
-        Message: "This Route is not yet defined"
-    });
-};
+//Route Handler for USERS- disply user by id
+//Handler Factory is handling everything
+exports.getUser = factory.getOne(User);
 
 //Route Handler for USERS- Create User
 
 exports.createUser = (req, res) =>{
     res.status(500).json({
         Status: "Error",
-        Message: "This Route is not yet defined"
+        Message: "This Route is not yet defined. User /Signup instead"
     });
 };
 
+//Do not Update password with this
 //Route Handler for USERS- to update user
-exports.updateUser = (req, res) =>{
-    res.status(500).json({
-        Status: "Error",
-        Message: "This Route is not yet defined"
-    });
-};
+exports.updateUser = factory.updateOne(User); //Handled By the Facory Handler
 
 //Route Handler for USERS- to delete a user
-exports.deleteUser = factory.deleteOne(User);
+exports.deleteUser = factory.deleteOne(User); //Handled By the Factory Handler
