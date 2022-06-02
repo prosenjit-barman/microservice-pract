@@ -3,6 +3,8 @@
 const express = require('express');
 const tourController = require('./../controllers/tourController');
 const authController = require('./../controllers/authController');
+//const reviewController = require('./../controllers/reviewController');
+const reviewRouter = require('./../routes/reviewRoutes');
 
 //Router for each resources- Tour
 const router = express.Router();
@@ -10,6 +12,20 @@ const router = express.Router();
 //Param Middleware
 //Need to include a value parameter also with the Param Middleware. Here declared as val
 //router.param('id', tourController.checkID);//Param Middleware function
+
+//Nested Route Start
+//POST /tour/_id(tour ID)/reviews = To create review fo a specific tour
+// router
+//     .route('/:tourId/reviews')
+//     .post(
+//     authController.protect, 
+//     authController.restrictTo('user'), 
+//     reviewController.createReview
+//     ); //Review Route within Tour. It is bit messy.
+//Nested Route End
+
+//Resolving the use of review route inside the tour route by merging params.
+router.use('/:tourId/reviews', reviewRouter);
 
 //As soon as someone hits the route, the aliastTopTours middleware will run first.
 router.route('/top-5-cheap').get(tourController.aliasTopTours, tourController.getAllTours)//when defining middleware or handler along, need to separate them by comma
@@ -31,5 +47,6 @@ router
     authController.restrictTo('admin', 'lead-guide'), //Roles allowed to interact with resources
     tourController.deleteTour
     ); //if a user already logged in authcontroller.protect
+
 
 module.exports = router;

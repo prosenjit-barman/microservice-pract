@@ -114,7 +114,7 @@ const tourSchema = new mongoose.Schema({
       type: mongoose.Schema.ObjectId,
       ref: 'User'
     }
-    ]
+    ],
     //Embedded Doc of User Start
     //guides: Array,
 
@@ -131,6 +131,13 @@ const tourSchema = new mongoose.Schema({
   tourSchema.virtual('durationWeeks').get(function() {
     return this.duration / 7
   }); //Arrow function doesn't get the this keyword. it can only be used with the regular function. This is pointing to the current document. This can't be used as query parameter
+  
+  //Virtual Populate
+  tourSchema.virtual('reviews', {
+    ref: 'Review',
+    foreignField: 'tour',
+    localField: '_id'
+  }); //Virtual Populating from one field to another. Need to specify Forenign Field and Local Field while referencing. Tour is coming from Review Model
   
   //Document Middleware. Defining Middleware. Pre Middleware will run before actual event. Save is event. run before .save() and .create()
   tourSchema.pre('save', function(next) {

@@ -1,6 +1,7 @@
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const factory = require('./handlerFactory');
 
 //Filtering the Objects that can user pass through Body.
 
@@ -98,9 +99,4 @@ exports.updateUser = (req, res) =>{
 };
 
 //Route Handler for USERS- to delete a user
-exports.deleteUser = (req, res) =>{
-    res.status(500).json({
-        Status: "Error",
-        Message: "This Route is not yet defined"
-    });
-};
+exports.deleteUser = factory.deleteOne(User);

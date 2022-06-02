@@ -360,7 +360,7 @@ Relationship between tours and users will be Few to Few relationship. Can be ref
 
 Modeling Data for Location(Geospatial).
 Geospatial data is basically describing location based on Altitude and latitude.
-GROJson to specify geospatial data
+GEOJson to specify geospatial data
 
 In order to specify a location, we always going to use $_dirname. it is the safe method to locate the file.
 While using Enum inside the DB object, type will be string and the array data of Enum will start with Capital Letter.
@@ -370,3 +370,10 @@ If the GeoJson is included, it is a requirement of Mongo is to include the coord
 Embedded users with the Tours 
 
 Populating- In order to get access to reference tour guides.
+If I search for a specific tour, how to get access to the reviews of that tour? 
+virtual populate: We can populate tour with reviews. We can get access to all the reviews of certain tour  but without keeping the arrays of ID on the tour. keeping that array of review ID on the tour without persisting them on the Database.
+
+Nested Routes: to post a review by including the id on the URL.
+In case of nested routes, we have defined reviews route inside the tour controller which is not a good practice. Also, the codes are duplicated. This needs to be resolved using merge params. An express method.
+
+A Handler function is a function that returns another function. 
