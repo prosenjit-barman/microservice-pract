@@ -14,6 +14,11 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 };
 
+//Controller for viewing profile
+exports.getMe = (req, res, next) => {
+    req.params.id = req.user.id;
+    next();
+}
 
 //Updating the User Data
 exports.updateMe = catchAsync( async (req, res, next) => {

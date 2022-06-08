@@ -377,3 +377,8 @@ Nested Routes: to post a review by including the id on the URL.
 In case of nested routes, we have defined reviews route inside the tour controller which is not a good practice. Also, the codes are duplicated. This needs to be resolved using merge params. An express method.
 
 A Handler function is a function that returns another function. 
+
+/me Endpoint to retrive user own data
+
+Rate Limiting: To prevent same IP too many request to our API.
+Rate limiter will allow certain number of requests. others will be blocked. The package we are going to use it Express-rate-limiter

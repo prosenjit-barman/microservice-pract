@@ -16,6 +16,9 @@ exports.deleteOne = Model => catchAsync(async (req,res, next) => {
         data: null
     });
 });
+
+
+
 exports.updateOne = Model => catchAsync(async (req, res, next) => {
     // if(req.params.id * 1 > tours.length){
     //     return res.status(404).json({
