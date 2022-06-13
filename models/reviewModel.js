@@ -1,6 +1,6 @@
 //Review / Rating / Created At / ref to User / ref to Tour
 const mongoose = require('mongoose');
-
+const Tour = require('./tourModel');
 const reviewSchema = new mongoose.Schema(
     {
         review: {
@@ -48,7 +48,53 @@ const reviewSchema = new mongoose.Schema(
         })
 
         next();
-    })
+    });
+
+    //static function to calculate average
+reviewSchema.statics.calcAverageRatings = async function(tourId) {
+    const stats = await this.aggregate([
+        {
+            $match: { tour: tourId }
+        },
+        {
+            $group: {
+                _id: `$tour`,
+                nRating: { $sum: 1 },
+                avgRating: { $avg: `$rating` }
+        }
+    }
+    ]);
+
+    if(stats.length > 0){
+    await Tour.findByIdAndUpdate(tourId, {
+        ratingsQuantity: stats[0].nRating,
+        ratingsAverage: stats[0].avgRating
+    });
+} else {
+    await Tour.findByIdAndUpdate(tourId, {
+        ratingsQuantity: 0,
+        ratingsAverage: 4.5
+    });
+}
+};
+
+reviewSchema.post('save', function(next) {
+    //This points to current doc
+    //Constructor is model who created the document
+    this.constructor.calcAverageRatings(this.tour)
+});
+
+reviewSchema.pre(/^findOneAnd/, async function(next) {
+    this.r = await this.findOne()
+    next()
+});
+
+reviewSchema.post(/^findOneAnd/, async function() {
+    //await this.findOne(); Does not work here as query is already executed
+    await this.r.constructor.calcAverageRatings(this.r.tour);
+});
+
+
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;

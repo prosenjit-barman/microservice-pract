@@ -128,6 +128,10 @@ const tourSchema = new mongoose.Schema({
     toObject: { virtuals: true }
   });
 
+  //tourSchema.index({price: 1}) //Positive number means sorting in ascending order. Negative means descending order
+  tourSchema.index({ price: 1, ratingsAverage: -1 }) //Positive number means sorting in ascending order. Negative means descending order
+  tourSchema.index({ slug: 1 }); //Indexing the slugs for querying tours via unique URL
+
   tourSchema.virtual('durationWeeks').get(function() {
     return this.duration / 7
   }); //Arrow function doesn't get the this keyword. it can only be used with the regular function. This is pointing to the current document. This can't be used as query parameter

@@ -380,5 +380,9 @@ A Handler function is a function that returns another function.
 
 /me Endpoint to retrive user own data
 
-Rate Limiting: To prevent same IP too many request to our API.
-Rate limiter will allow certain number of requests. others will be blocked. The package we are going to use it Express-rate-limiter
+improving read performance using indexes: index improve the query and reduce the loading time of data.
+If indexing defined for any specific field, it become much easier for mongodb engine to query and figure out the specific data.
+don't need to apply indexes blindly since it can increase the index size.
+tour slug needs to be indexing. Unique slug will require to query specific tour.
+
+Average rating and number of tour will be calculated automatically each time whn a review is updated.
