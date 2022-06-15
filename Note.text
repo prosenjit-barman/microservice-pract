@@ -386,3 +386,10 @@ don't need to apply indexes blindly since it can increase the index size.
 tour slug needs to be indexing. Unique slug will require to query specific tour.
 
 Average rating and number of tour will be calculated automatically each time whn a review is updated.
+
+Avoiding duplicate review: Reviews needs to be unique.
+
+Searching tour within a certain distance. It is one of the Geospatial Queries.
+Calculating distances to all the tour from certain distances
+
+exposing passwords on api is not a good practice at all. We need to save em as environment variable.

@@ -181,3 +181,69 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
         }
   });
   });
+
+//('/tours-within/:distance/center/:latlng/unit/:unit', tourController.getToursWithin)//distance means the meter of distance from the center(where living) and latlng mean latitude and longitude. distance will be within miles and latlng will gold the coordintates.
+// /tours-within/223/center/22.3395259,91.8420835/unit/mi
+exports.getToursWithin = catchAsync(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params; //destructuring done here to get all pof the variable in once
+  const [lat, lng] = latlng.split(','); //destructuring the latlng value and saving them in two sperate variable in array
+
+  const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1; //for miles, the radius of earth is 3963.2 miles and for KM, it is 6378.1 kilometer. Dividing the radius of earth it with the distancewithin will bring the required radius.
+  //if we actually have the lattitude and longtitude in a required format.
+  if(!lat || !lng) {
+    next(new AppError('Please Provide Latitude and lontitude in the format lat, lng.', 400)
+    );
+  };
+
+  const tours = await Tour.find({ 
+    startLocation: { $geoWithin: 
+      { $centerSphere: [[lng, lat], radius] } 
+    } 
+  }) //geowithin helps to find documents within specific radius. For that reason, we also need to include centerSphere to get the data in a radius from center location. Lontitude will always in first and then lattitude. After specifying the center of the sphere, we need to include the radius also.
+  //console.log(distance, lat, lng, unit);
+  res.status(200).json({
+    status: 'success',
+    results: tours.length,
+    data: {
+      data: tours
+    }
+  });
+});
+
+exports.getDistances = catchAsync(async (req, res, next) => {
+  const { latlng, unit } = req.params; //destructuring done here to get all pof the variable in once
+  const [lat, lng] = latlng.split(','); //destructuring the latlng value and saving them in two sperate variable in array
+
+  const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
+  //if we actually have the lattitude and longtitude in a required format.
+  if(!lat || !lng) {
+    next(new AppError('Please Provide Latitude and lontitude in the format lat, lng.', 400)
+    );
+  };
+
+  const distances = await Tour.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: 'Point',
+          coordinates: [lng * 1, lat * 1]
+        }, //hear, new is the longtitude and lattitude. We will calculate the distance from destinantion to lnglat.
+        distanceField: 'distance',
+        distanceMultiplier: multiplier
+      }
+    },
+    {
+      $project: {
+        distance: 1,
+        name: 1
+      }
+    }
+  ]);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: distances
+    }
+  });
+});

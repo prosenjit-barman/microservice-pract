@@ -37,7 +37,8 @@ const tourSchema = new mongoose.Schema({
       type: Number,
       default: 4.5,
       min: [1, 'Rating Must be above 1.0'],
-      max: [5, 'Rating Must be below 5.0']
+      max: [5, 'Rating Must be below 5.0'],
+      set: val => Math.round(val * 10) / 10
     },
     ratingsQuantity: {
       type: Number,
@@ -131,6 +132,7 @@ const tourSchema = new mongoose.Schema({
   //tourSchema.index({price: 1}) //Positive number means sorting in ascending order. Negative means descending order
   tourSchema.index({ price: 1, ratingsAverage: -1 }) //Positive number means sorting in ascending order. Negative means descending order
   tourSchema.index({ slug: 1 }); //Indexing the slugs for querying tours via unique URL
+  tourSchema.index({ startLocation: '2dsphere' }) //for geospatial data, we need to include 2d sphere index in case of we are working with real earth points of the surface
 
   tourSchema.virtual('durationWeeks').get(function() {
     return this.duration / 7
@@ -195,11 +197,11 @@ const tourSchema = new mongoose.Schema({
       });
   
       //AGREGATION MIDDLEWARE
-      tourSchema.pre('aggregate', function(next) {
-        this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });//removing all the secret tours from the document
-        console.log(this.pipeline());
-        next();
-      });
+      // tourSchema.pre('aggregate', function(next) {
+      //   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });//removing all the secret tours from the document
+      //   console.log(this.pipeline());
+      //   next();
+      // });
 
       
   //Creating Model for Tour out of the Tour Schema

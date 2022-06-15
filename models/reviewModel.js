@@ -33,6 +33,10 @@ const reviewSchema = new mongoose.Schema(
         toObject: { virtuals: true }
     });
 
+    //Unique Reviews Construction
+    //Only one user can create a review per tour
+    reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
     reviewSchema.pre(/^find/, function(next) {
         // this.populate({
         //     path: 'tour',

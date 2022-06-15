@@ -35,6 +35,10 @@ router.route('/monthly-plan/:year')
 .get(authController.protect, 
     authController.restrictTo('admin', 'lead-guide', 'guide'), 
     tourController.getMonthlyPlan);
+
+router.route('/tours-within/:distance/center/:latlng/unit/:unit').get(tourController.getToursWithin)//distance means the meter of distance from the center(where living) and latlng mean latitude and longitude. distance will be within miles and latlng will gold the coordintates.
+//Calculating distances from certain point
+router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
 //If need to change the version or resource name if need to change anything
 router
 .route('/')
