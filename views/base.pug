@@ -1,0 +1,21 @@
+doctype html 
+html 
+    head 
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="css/style.css")
+        link(rel="shortcut icon", type="image/png" href="img/favicon.png")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300i,700")
+        title Touring | Exciting tours for adventurous people 
+        //- Interpolation. Have added tour variable with title which is interpolation 
+        
+    body
+        // Header
+
+        include _header
+        // Content
+        section.overview
+            h1= tour 
+
+        // Footer
+        include _footer

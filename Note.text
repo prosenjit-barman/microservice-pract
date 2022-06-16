@@ -385,7 +385,7 @@ If indexing defined for any specific field, it become much easier for mongodb en
 don't need to apply indexes blindly since it can increase the index size.
 tour slug needs to be indexing. Unique slug will require to query specific tour.
 
-Average rating and number of tour will be calculated automatically each time whn a review is updated.
+Average rating and number of tour will be calculated automatically each time when a review is updated.
 
 Avoiding duplicate review: Reviews needs to be unique.
 
@@ -393,3 +393,29 @@ Searching tour within a certain distance. It is one of the Geospatial Queries.
 Calculating distances to all the tour from certain distances
 
 exposing passwords on api is not a good practice at all. We need to save em as environment variable.
+
+Server Side and client side rendering: Templating engine will be used to make server side rendering. Template engine will allow us to fill up template with data. Pug will be used in this case. 
+Pug templates are located in views folder.
+
+IN pug templates, writing "h1 the park camper" will directly point to- <h1>The Park Camper</h1>
+Fundamental of Pug Template: the way link is included is         link(rel="stylesheet", href="css/style.css")
+
+each of the assets triggers their own http request. by including express.static on app.js, will poibt to load all the static files from the public folder.
+
+Base pug templates: We are going to create base templates and then inject the contents dynamically.
+//- h1= tour /*we have defined some data in variable on app.js file. In this way, the local data are rendered on client side*/
+        //- h2= user.toUpperCase() /*Buffer code. Have included a JS function with output which makes it buffer code*/
+
+       //- - const x = 9 /*Have defined a variable. Unbuffered code */
+        h2= 2 * x
+
+        //- h1 The Park Camper /*double slash will dash(//-) is the format of commenting in Pug file.*/
+        //- p Some text of Paragraph from pug -// 
+
+        to define a class for an element in pug, simply need to add .
+        for example, if element is header and class is also header, then in pug, it will be, header.header(before dot is <header> element and after dot is class)
+        BEM Architecture: nav is block, nav__el is element, .nav--tours is modifier 
+
+        in case of div, only putting . with class name is enough. Pug will automatically take as div. Like div.header instead of .header
+        in case of intendation, we can simplu put a colon:
+In order to include templates to another template, need to use the include command.

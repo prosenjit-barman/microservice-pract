@@ -199,7 +199,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
     startLocation: { $geoWithin: 
       { $centerSphere: [[lng, lat], radius] } 
     } 
-  }) //geowithin helps to find documents within specific radius. For that reason, we also need to include centerSphere to get the data in a radius from center location. Lontitude will always in first and then lattitude. After specifying the center of the sphere, we need to include the radius also.
+  }); //geowithin helps to find documents within specific radius. For that reason, we also need to include centerSphere to get the data in a radius from center location. Lontitude will always in first and then lattitude. After specifying the center of the sphere, we need to include the radius also.
   //console.log(distance, lat, lng, unit);
   res.status(200).json({
     status: 'success',

@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -13,6 +14,12 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 //require express
 const app = express();
+app.set('view engine', 'pug'); //pug is used as template engine.
+app.set('views', path.join(__dirname, 'views')); //path.join will be used to specify the directory name
+
+//Accesing the Static Files on other folder. Middleware defined, static fuction of express default Middleware
+//serving static file
+app.use(express.static(path.join(__dirname, 'public'))); //Public folder is already set to root
 
 // 1) GLOBAL MIDDLEWARES
 //Important security HTTP Header
@@ -56,9 +63,6 @@ app.use(hpp({
 })
 );
 
-//Accesing the Static Files on other folder. Middleware defined, static fuction of express default Middleware
-//serving static file
-app.use(express.static('./public')); //Public folder is already set to root
 
 //Creating Middleware
 //Next function must be called when creating Middleware
@@ -128,6 +132,13 @@ app.use((req, res, next) => {
 
 //Router for user resources
 //created on tourRoutes.js and userRoutes.js
+// Routes
+app.get('/', (req, res) => {
+  res.status(200).render('base', {
+    tour: 'The Forest Hiker',
+    user: 'Prosenjit'
+  }) //pass data into template. Need to define a object and some data there. The Data or object defined here are called as locals in pug file 
+}); //specifying pug template. It will go directly to the views folder and check for the file and then ender the file.
 
 //Mounting Router comes after defining all the variable
 app.use('/api/v1/tours', tourRouter); //connecting new router to the application using Middleware,tourRouter(Mounting)
