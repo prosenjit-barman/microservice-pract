@@ -12,6 +12,7 @@ const GlobalErrorhandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 //require express
 const app = express();
 app.set('view engine', 'pug'); //pug is used as template engine.
@@ -132,15 +133,29 @@ app.use((req, res, next) => {
 
 //Router for user resources
 //created on tourRoutes.js and userRoutes.js
-// Routes
-app.get('/', (req, res) => {
-  res.status(200).render('base', {
-    tour: 'The Forest Hiker',
-    user: 'Prosenjit'
-  }) //pass data into template. Need to define a object and some data there. The Data or object defined here are called as locals in pug file 
-}); //specifying pug template. It will go directly to the views folder and check for the file and then ender the file.
+// // Routes
+// app.get('/', (req, res) => {
+//   res.status(200).render('base', {
+//     tour: 'The Forest Hiker',
+//     user: 'Prosenjit'
+//   }) //pass data into template. Need to define a object and some data there. The Data or object defined here are called as locals in pug file 
+// }); //specifying pug template. It will go directly to the views folder and check for the file and then ender the file.
+
+// //Route for all pages
+// app.get('/overview', (req, res) => {
+//   res.status(200).render('overview', {
+//     title: 'All Tours'
+//   });
+// });
+
+// app.get('/tour', (req, res) => {
+//   res.status(200).render('tour', {
+//     title: 'The Forest Hiker Tour'
+//   });
+// });
 
 //Mounting Router comes after defining all the variable
+app.use('/', viewRouter); //connecting new router to the application using Middleware,tourRouter(Mounting)*/
 app.use('/api/v1/tours', tourRouter); //connecting new router to the application using Middleware,tourRouter(Mounting)
 app.use('/api/v1/users', userRouter); //connecting new router to the application using Middleware,userRouter(Mounting)
 app.use('/api/v1/reviews', reviewRouter); //connecting new router to the application using Middleware,userRouter(Mounting)

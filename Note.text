@@ -419,3 +419,18 @@ Base pug templates: We are going to create base templates and then inject the co
         in case of div, only putting . with class name is enough. Pug will automatically take as div. Like div.header instead of .header
         in case of intendation, we can simplu put a colon:
 In order to include templates to another template, need to use the include command.
+
+Extends is one of the important feature of Pug. it allows base template for every page we want to render.
+each of the pug template, we will only include the content for that. no header or footer required. We will include contents to the template and that inject the template to the base template
+we will include a block to inject other templates
+since we want to include the dependency of of the base template, that needs to be added also on the template by include extends <template name>.
+
+In order to display the data from collection to the page, we need to require the model on the viewscontroller. then rest of the proedure is getting the data from that specific collection.
+
+In case of displaying specific data within Tag. we need to use it in this way: tour.name
+In case of changing the name of attribute, we need to use in template string. Like this way `${tour.name}`
+
+If we need to add multiple data in a same line from database, then need to specify them by including a space. 
+
+To include link from database, we will also use it like the template string. slug will be placed there.
+Whenever we need to put a inline space in pug, we need to include the space by including a pipleline (|) and then after a whitespace
