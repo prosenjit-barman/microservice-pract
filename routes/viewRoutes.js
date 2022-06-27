@@ -3,6 +3,7 @@ const viewsController = require('../controllers/viewsController');
 
 const router = express.Router();
 
+
 // Routes
 // router.get('/', (req, res) => {
 //     res.status(200).render('base', {
@@ -13,6 +14,6 @@ const router = express.Router();
   
   //Route for all pages
   router.get('/', viewsController.getOverview);
-  router.get('/tour', viewsController.getTour);
+  router.get('/tour/:slug', viewsController.getTour);
 
 module.exports = router;

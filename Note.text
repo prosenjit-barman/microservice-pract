@@ -434,3 +434,8 @@ If we need to add multiple data in a same line from database, then need to speci
 
 To include link from database, we will also use it like the template string. slug will be placed there.
 Whenever we need to put a inline space in pug, we need to include the space by including a pipleline (|) and then after a whitespace
+mixins: reusable pieces pf code in pug.
+
+to insert javascript code inside pug template, we should start wrti code by including a hyphen -
+
+if ever encounter with CORS error, then just include crossorigin="anonymous" after the third part link added as script or stylesheet
