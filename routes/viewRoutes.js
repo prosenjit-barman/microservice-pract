@@ -1,8 +1,11 @@
 const express = require('express');
 const viewsController = require('../controllers/viewsController');
+const authController = require('../controllers/authController');
+
 
 const router = express.Router();
 
+router.use(authController.isLoggedIn)
 
 // Routes
 // router.get('/', (req, res) => {
@@ -15,5 +18,8 @@ const router = express.Router();
   //Route for all pages
   router.get('/', viewsController.getOverview);
   router.get('/tour/:slug', viewsController.getTour);
+
+  // Login
+  router.get('/login', viewsController.getLoginForm);
 
 module.exports = router;

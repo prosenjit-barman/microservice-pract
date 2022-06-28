@@ -439,3 +439,11 @@ mixins: reusable pieces pf code in pug.
 to insert javascript code inside pug template, we should start wrti code by including a hyphen -
 
 if ever encounter with CORS error, then just include crossorigin="anonymous" after the third part link added as script or stylesheet
+
+We should always specify next as argument if the function is async.
+
+In order to implement the login system, we first need to capture data that will be only captured after hitting the submit through event. Works done on login.js file
+In order to do HTTP request  for login, we are going to use a library named axios
+Cookie enable us to build entire authentication. Browser will not send cookie along with every request.
+
+In order to get access to the cookies in the request, we need to install a middleware named cookie-parser

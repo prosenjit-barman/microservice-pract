@@ -97,7 +97,11 @@ exports.protect = catchAsync(async (req, res, next) => {
         req.headers.authorization && 
         req.headers.authorization.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
-    }
+    } 
+    else if (req.cookies.jwt){
+        token = req.cookies.jwt;
+    } //if there are no token in Authorization header, then Cookies will be used.
+    
     //console.log(token);
 
     if(!token) {
@@ -123,6 +127,39 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.user = currentUser; //all the data of the user in request
     next(); //This next will send the user to protected route if all the above criterias are fulfilled.
 });
+
+
+//Only For Rendered Page. No Errors.
+exports.isLoggedIn = catchAsync(async (req, res, next) => {    
+    if (req.cookies.jwt){
+
+    //2) Verification Token
+    const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt, 
+        process.env.JWT_SECRET
+        ); //decoded payload to JSON web token
+
+    //3) Check if the User still exists
+    const currentUser = await User.findById(decoded.id);
+    if(!currentUser) {
+        return next();
+    }
+
+    //4) Check if user changed password after the JWT token was issued
+    if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+    } //iat, initially created at
+    
+    //GRANT ACCESS TO PROTECTED ROUTE
+    res.locals.user = currentUser;
+    return next();
+}
+
+    next(); //This next will send the user to protected route if all the above criterias are fulfilled.
+
+});
+
+
 
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {

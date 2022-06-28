@@ -1,5 +1,5 @@
 /* eslint-disable */
-console.log("Hello From Client Side ✌");
+//console.log("Hello From Client Side ✌");
 
 const locations = JSON.parse(document.getElementById('map').dataset.locations);
 

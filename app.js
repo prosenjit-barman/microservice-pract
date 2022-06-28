@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const GlobalErrorhandler = require('./controllers/errorController');
@@ -24,7 +25,15 @@ app.use(express.static(path.join(__dirname, 'public'))); //Public folder is alre
 
 // 1) GLOBAL MIDDLEWARES
 //Important security HTTP Header
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    useDefaults: true, 
+    directives: { 
+      'script-src': ["'self'", "https://cdnjs.cloudflare.com/"]  
+    }
+  }
+})
+);
 
 console.log(process.env.NODE_ENV);
 //Dev Logging
@@ -43,7 +52,8 @@ app.use('/api', limiter);
 
 //Defining Middleware
 //Body Parser. Reading data from body into req.body
-app.use(express.json( { limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted.
+app.use(express.json( { limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted. Parses data from bodies
+app.use(cookieParser()); //parses data from cookies
 
 //Data Sanitization against NoSql query injection
 app.use(mongoSanitize()); //this middleware will check req.body, req.querystring and req.params and filtered out all of the $ sign and dots. By removing them, they are not longer gonna work. 
@@ -74,9 +84,10 @@ app.use(hpp({
 // });
 
 //Middleware that will display the date with the Response
+//Test Middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  //console.log(req.headers);
+  console.log(req.cookies);
   next();
 });
 

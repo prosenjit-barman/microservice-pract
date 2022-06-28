@@ -4,10 +4,11 @@ header.header
     .header__logo
         img(src="/img/logo-white.png" alt="Touring logo")
     nav.nav.nav--user
-        //- a.nav__el(href="#") My bookings
-        //- a.nav__el(href="#")
-        //-     img.nav__user-img(src="img/user.jpg" alt="User photo")
-        //-     span Prosenjit
-
-        button.nav__el Log In
-        button.nav__el.nav__el--cta Sign up
+        if user
+            a.nav__el.nav__el--logout Log Out
+            a.nav__el(href="#")
+                img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of the ${user.name}`)
+                span= user.name.split(' ')[0] /*Splitting by space and only showing the first name */
+        else
+            a.nav__el(href="/login") Log In
+            a.nav__el.nav__el--cta(href="/login") Sign up
