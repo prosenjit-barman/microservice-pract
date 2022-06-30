@@ -7,11 +7,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=development nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "debug": "ndb server.js"
+    "debug": "ndb server.js",
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "author": "Prosenjit",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "a": "^2.1.2",
+    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^14.3.2",
@@ -24,7 +29,7 @@
     "mongoose": "^5.13.14",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.3",
-    "nodemon": "^2.0.15",
+    "nodemon": "^1.19.4",
     "pug": "^3.0.2",
     "slugify": "^1.6.5",
     "validator": "^13.7.0",
@@ -39,6 +44,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
+    "parcel-bundler": "^1.12.3",
     "prettier": "^2.5.1"
   }
 }

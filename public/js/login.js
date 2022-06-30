@@ -1,6 +1,8 @@
 /* eslint-disable */
+import axios from 'axios';
+import { showAlert } from './alert';
 
-const login = async (email, password) => {
+export const login = async (email, password) => {
     try { 
         const res = await axios({
             method: 'POST',
@@ -11,7 +13,7 @@ const login = async (email, password) => {
             }
         });
         if(res.data.status === 'Success') {
-            alert("Logged In Succesfully✌!");
+            showAlert('success', "Logged In Succesfully✌!");
             window.setTimeout(() => {
                 location.assign('/');
             }, 1500
@@ -19,14 +21,20 @@ const login = async (email, password) => {
     }
     } 
     catch(err) {
-        alert(err.response.data.message);
+        showAlert('error', err.response.data.message);
     }
 };
 
-//Getting the username and password through event
-document.querySelector('.form').addEventListener('submit', e => {
-    e.preventDefault();
-    const email = document.getElementById('email').value; //Value capturing from a field
-    const password = document.getElementById('password').value; //Value capturing from a field
-    login(email, password);
-})
+export const logout = async () => {
+    try{
+        const res = await axios({
+            method: 'GET',
+            url: 'http://localhost:3000/api/v1/users/logout',
+        });
+        
+        if(res.data.status === 'Success') location.reload(true);
+
+    } catch(err) {
+        showAlert('error', 'Error Logging Out! Please Try Again.');
+    }
+}

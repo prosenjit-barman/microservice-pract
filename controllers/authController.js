@@ -89,6 +89,17 @@ exports.login = catchAsync(async (req, res, next) => {
     // });
 });
 
+exports.logout = (req, res) => {
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    });
+    res.status(200).json({
+        status: 'Success'
+    });
+};
+
+
 exports.protect = catchAsync(async (req, res, next) => {
     //1) Getting Token and check if it's there
     let token;
@@ -130,8 +141,9 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 
 //Only For Rendered Page. No Errors.
-exports.isLoggedIn = catchAsync(async (req, res, next) => {    
+exports.isLoggedIn = async (req, res, next) => {    
     if (req.cookies.jwt){
+        try{
 
     //2) Verification Token
     const decoded = await promisify(jwt.verify)(
@@ -153,11 +165,13 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     //GRANT ACCESS TO PROTECTED ROUTE
     res.locals.user = currentUser;
     return next();
+} catch(err) {
+    return next()
 }
-
+}
     next(); //This next will send the user to protected route if all the above criterias are fulfilled.
 
-});
+};
 
 
 

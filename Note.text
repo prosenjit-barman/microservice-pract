@@ -447,3 +447,10 @@ In order to do HTTP request  for login, we are going to use a library named axio
 Cookie enable us to build entire authentication. Browser will not send cookie along with every request.
 
 In order to get access to the cookies in the request, we need to install a middleware named cookie-parser
+
+Parcel bunder will be used to bundle all the JS scripts. We will use the version 1.12.3
+After bundling the scripts, we will include the bundle file in the index.
+
+In case of exporting a function from a js file that is within a variable, we simply write export. While importing on other file, just need to include the name of the function within curly braces{}.
+
+To log out a user, we will never manipulate the HTTPOnly rule. instead, we will create a logout route that will create a new token without any key.
