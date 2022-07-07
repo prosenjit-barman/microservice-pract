@@ -5,8 +5,6 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.use(authController.isLoggedIn)
-
 // Routes
 // router.get('/', (req, res) => {
 //     res.status(200).render('base', {
@@ -16,10 +14,13 @@ router.use(authController.isLoggedIn)
 //   }); //specifying pug template. It will go directly to the views folder and check for the file and then ender the file.
   
   //Route for all pages
-  router.get('/', viewsController.getOverview);
-  router.get('/tour/:slug', viewsController.getTour);
+  router.get('/', authController.isLoggedIn, viewsController.getOverview);
+  router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
 
   // Login
-  router.get('/login', viewsController.getLoginForm);
+  router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
+  router.get('/me', authController.protect, viewsController.getAccount);
+
+  // router.post('/submit-user-data', authController.protect, viewsController.updateUserData);
 
 module.exports = router;

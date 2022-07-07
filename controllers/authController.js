@@ -136,6 +136,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     
     //GRANT ACCESS TO PROTECTED ROUTE
     req.user = currentUser; //all the data of the user in request
+    res.locals.user = currentUser
     next(); //This next will send the user to protected route if all the above criterias are fulfilled.
 });
 

@@ -53,6 +53,7 @@ app.use('/api', limiter);
 //Defining Middleware
 //Body Parser. Reading data from body into req.body
 app.use(express.json( { limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted. Parses data from bodies
+app.use(express.urlencoded( { extended: true, limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted. Parses data from bodies
 app.use(cookieParser()); //parses data from cookies
 
 //Data Sanitization against NoSql query injection

@@ -454,3 +454,10 @@ After bundling the scripts, we will include the bundle file in the index.
 In case of exporting a function from a js file that is within a variable, we simply write export. While importing on other file, just need to include the name of the function within curly braces{}.
 
 To log out a user, we will never manipulate the HTTPOnly rule. instead, we will create a logout route that will create a new token without any key.
+
+It is good to update a user usign API.
+
+In case of updating data using API, no nedd to use action or method. Everything will be handled by axios.
+Update user password through API.
+
+Textcontent or innerhtml method is used to change the content inside HTML
