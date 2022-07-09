@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
 
@@ -23,8 +24,10 @@ userController.getMe,
 userController.getUser);
 
 router.patch('/updateMe', 
-userController.updateMe
-);
+userController.uploadUserPhoto, 
+userController.resizeUserPhoto, 
+userController.updateMe); //single means we only want to upload a single image. Inside the single, the name of the upload field which we are going to use to upload an image.
+
 
 router.delete('/deleteMe', 
 userController.deleteMe

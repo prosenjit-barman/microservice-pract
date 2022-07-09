@@ -461,3 +461,8 @@ In case of updating data using API, no nedd to use action or method. Everything 
 Update user password through API.
 
 Textcontent or innerhtml method is used to change the content inside HTML
+
+Multer will be used to upload user photo. It is a popular middleware to handle multipart form data which is a form encoding that is used to upload files from a form.
+after creating tjhe multer function, we will add this in the /updateMe route.
+single function will be used to specify the upload field name. It means we only want to upload a single image. Inside the single, the name of the upload field which we are going to use to upload an image.
+In order to make the multer upload work, need to configure multer storage and multer filter 
