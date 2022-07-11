@@ -465,4 +465,8 @@ Textcontent or innerhtml method is used to change the content inside HTML
 Multer will be used to upload user photo. It is a popular middleware to handle multipart form data which is a form encoding that is used to upload files from a form.
 after creating tjhe multer function, we will add this in the /updateMe route.
 single function will be used to specify the upload field name. It means we only want to upload a single image. Inside the single, the name of the upload field which we are going to use to upload an image.
-In order to make the multer upload work, need to configure multer storage and multer filter 
+In order to make the multer upload work, need to configure multer storage and multer filter.
+
+Email Handler: A class needs to be created. Class always have an constructur function. Objects re used through the constructor. The parameter of the constructor will be the email and other information.
+
+We need to include a text version also into the email which is beneficiary to improve the email delivery rate. A package will help in this matter named html-to-text
