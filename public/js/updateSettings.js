@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { showAlert } from './alert';
 
@@ -17,6 +16,7 @@ export const updateSettings = async (data, type) => {
 
         if(res.data.status === 'Success') {
             showAlert('success', `${type.toUpperCase()} Updated Successfully!`);
+            location.reload(true);
         }
     } catch(err) {
         showAlert('error', err.response.data.message)

@@ -11320,6 +11320,7 @@ var updateSettings = /*#__PURE__*/function () {
 
             if (res.data.status === 'Success') {
               (0, _alert.showAlert)('success', "".concat(type.toUpperCase(), " Updated Successfully!"));
+              location.reload(true);
             }
 
             _context.next = 11;
@@ -11653,14 +11654,13 @@ if (loginForm) {
 if (logOutBtn) logOutBtn.addEventListener('click', _login.logout);
 if (userDataForm) userDataForm.addEventListener('submit', function (e) {
   e.preventDefault();
-  var name = document.getElementById('name').value; //Value capturing from a field
+  var form = new FormData();
+  form.append('name', document.getElementById('name').value);
+  form.append('email', document.getElementById('email').value);
+  form.append('photo', document.getElementById('photo').files[0]); // const name = document.getElementById('name').value; //Value capturing from a field
+  // const email = document.getElementById('email').value; //Value capturing from a field
 
-  var email = document.getElementById('email').value; //Value capturing from a field
-
-  (0, _updateSettings.updateSettings)({
-    name: name,
-    email: email
-  }, 'data');
+  (0, _updateSettings.updateSettings)(form, 'data');
 });
 if (userPasswordForm) userPasswordForm.addEventListener('submit', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
@@ -11732,7 +11732,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49739" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54783" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

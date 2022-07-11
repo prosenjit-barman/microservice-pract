@@ -32,10 +32,15 @@ if (logOutBtn) logOutBtn.addEventListener('click', logout);
 if(userDataForm)
     userDataForm.addEventListener('submit', e => {
         e.preventDefault();
-        const name = document.getElementById('name').value; //Value capturing from a field
-        const email = document.getElementById('email').value; //Value capturing from a field
+        const form = new FormData();
+        form.append('name', document.getElementById('name').value);
+        form.append('email', document.getElementById('email').value);
+        form.append('photo', document.getElementById('photo').files[0]);
 
-        updateSettings({name, email}, 'data');
+        // const name = document.getElementById('name').value; //Value capturing from a field
+        // const email = document.getElementById('email').value; //Value capturing from a field
+
+        updateSettings(form, 'data');
     });
     
     if(userPasswordForm)
