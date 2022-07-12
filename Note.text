@@ -470,3 +470,7 @@ In order to make the multer upload work, need to configure multer storage and mu
 Email Handler: A class needs to be created. Class always have an constructur function. Objects re used through the constructor. The parameter of the constructor will be the email and other information.
 
 We need to include a text version also into the email which is beneficiary to improve the email delivery rate. A package will help in this matter named html-to-text
+
+sendgrid will be used to send mails to the real mail.
+
+while configuring the sendgrid, in case of nodemailer, we should choose smtp relay
