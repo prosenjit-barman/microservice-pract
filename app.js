@@ -13,6 +13,7 @@ const GlobalErrorhandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 //require express
 const app = express();
@@ -25,15 +26,7 @@ app.use(express.static(path.join(__dirname, 'public'))); //Public folder is alre
 
 // 1) GLOBAL MIDDLEWARES
 //Important security HTTP Header
-app.use(helmet({
-  contentSecurityPolicy: {
-    useDefaults: true, 
-    directives: { 
-      'script-src': ["'self'", "https://cdnjs.cloudflare.com/"]  
-    }
-  }
-})
-);
+app.use(helmet());
 
 console.log(process.env.NODE_ENV);
 //Dev Logging
@@ -171,6 +164,7 @@ app.use('/', viewRouter); //connecting new router to the application using Middl
 app.use('/api/v1/tours', tourRouter); //connecting new router to the application using Middleware,tourRouter(Mounting)
 app.use('/api/v1/users', userRouter); //connecting new router to the application using Middleware,userRouter(Mounting)
 app.use('/api/v1/reviews', reviewRouter); //connecting new router to the application using Middleware,userRouter(Mounting)
+app.use('/api/v1/booking', bookingRouter); //connecting new router to the application using Middleware,userRouter(Mounting)
 
 //ROUTE HANDLER FOR UNDEFINED CONTROLLERS OR HANDLER FUNCTIONS
 //This is defined after the tour router because of effective use od the middleware
