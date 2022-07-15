@@ -474,3 +474,5 @@ We need to include a text version also into the email which is beneficiary to im
 sendgrid will be used to send mails to the real mail.
 
 while configuring the sendgrid, in case of nodemailer, we should choose smtp relay
+
+in case of stripe configuration, always need to make sure that the private key is placed properly.

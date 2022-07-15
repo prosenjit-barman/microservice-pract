@@ -1,8 +1,9 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const Tour = require('./../models/tourModel');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
+const Tour = require('../models/tourModel');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
+const Booking = require('../models/bookingModel');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     // Get Currently Booked Tour
@@ -14,7 +15,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         //Only Card Method are allowed
         payment_method_types: ['card'],
         // After succesful payment route
-        success_url: `${req.protocol}://${req.get('host')}/`,
+        success_url: `${req.protocol}://${req.get('host')}/?tour=${req.params.tourId}&user=${req.user.id}&price=${tour.price}`,
         // After Cancelling the Payment
         cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
         // Customer Email to provide personalized experience and to store the payment
@@ -43,3 +44,19 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         session
     })
 });
+
+exports.createBookingCheckout = catchAsync(async (req, res, next) => {
+    // This is temporary, everyone can make bookings without paying
+    const {tour, user, price} = req.query; //destructuring of to get the data from query string
+    if(!tour && !user && !price) return next();
+
+    await Booking.create({tour, user, price});
+
+    res.redirect(req.originalUrl.split('?')[0]);
+});
+
+exports.createBooking = factory.createOne(Booking);
+exports.getBooking = factory.getOne(Booking);
+exports.getallBooking = factory.getAll(Booking);
+exports.updateBooking = factory.updateOne(Booking);
+exports.deleteBooking = factory.deleteOne(Booking);
