@@ -189,12 +189,12 @@ const tourSchema = new mongoose.Schema({
     next();
   });
     //POST QUERY MIDDLEWARE
-    tourSchema.post(/^find/, function(docs, next) {
-      //tourSchema.pre('find', function(next) {
-        console.log(`Query took ${Date.now() - this.start} milliseconds`); //will display how long the query takes.
-        //console.log(docs);
-        next();
-      });
+    // tourSchema.post(/^find/, function(docs, next) {
+    //   //tourSchema.pre('find', function(next) {
+    //     console.log(`Query took ${Date.now() - this.start} milliseconds`); //will display how long the query takes.
+    //     //console.log(docs);
+    //     next();
+    //   });
   
       //AGREGATION MIDDLEWARE
       // tourSchema.pre('aggregate', function(next) {

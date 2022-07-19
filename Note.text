@@ -476,3 +476,6 @@ sendgrid will be used to send mails to the real mail.
 while configuring the sendgrid, in case of nodemailer, we should choose smtp relay
 
 in case of stripe configuration, always need to make sure that the private key is placed properly.
+before depolying, we need to compress text and take necesary steps
+need to comment out the console.log to prevent poluting the log file.
+need to remove the localhost and port and leave the other things as they are if the API and backend hosted on same server. In case of different server, the hostname needs to be updated accordingly.

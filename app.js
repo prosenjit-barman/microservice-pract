@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const GlobalErrorhandler = require('./controllers/errorController');
@@ -68,6 +69,8 @@ app.use(hpp({
 })
 );
 
+//Compress text that is send to client
+app.use(compression());
 
 //Creating Middleware
 //Next function must be called when creating Middleware
