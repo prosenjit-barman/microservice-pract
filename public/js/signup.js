@@ -13,7 +13,8 @@ export const signup = async (name, email, password, passwordConfirm) => {
                 passwordConfirm
             }
         });
-        if(res.data.status === 'success') {
+        if(res.data.status === 'Success') {
+            console.log(res);
             showAlert('success', 'Succesfully Signed up! Logging You In...');
             window.setTimeout(() => {
                 location.assign('/');

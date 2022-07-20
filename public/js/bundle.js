@@ -8828,7 +8828,8 @@ var signup = /*#__PURE__*/function () {
           case 3:
             res = _context.sent;
 
-            if (res.data.status === 'success') {
+            if (res.data.status === 'Success') {
+              console.log(res);
               (0, _alert.showAlert)('success', 'Succesfully Signed up! Logging You In...');
               window.setTimeout(function () {
                 location.assign('/');
