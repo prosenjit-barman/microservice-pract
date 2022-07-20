@@ -8828,8 +8828,8 @@ var signup = /*#__PURE__*/function () {
           case 3:
             res = _context.sent;
 
-            if (res.data.status === 'Success') {
-              (0, _alert.showAlert)('success', "Succesfully Signed up! Logging You In...");
+            if (res.data.status === 'success') {
+              (0, _alert.showAlert)('success', 'Succesfully Signed up! Logging You In...');
               window.setTimeout(function () {
                 location.assign('/');
               }, 1500); //After logging in, A success message will appear and after 1.5 s, logged in user will be redirected to Hompage. 
@@ -9572,7 +9572,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59888" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57051" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
