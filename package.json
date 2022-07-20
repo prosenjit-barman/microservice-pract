@@ -4,9 +4,8 @@
   "description": "Microservice learning ",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "NODE_ENV=development nodemon server.js",
+    "dev": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
@@ -55,6 +54,6 @@
     "prettier": "^2.5.1"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": "^10"
   }
 }

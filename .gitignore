@@ -1,4 +1,5 @@
-node_modules
-config.env
+node_modules/
+*.env
 .cache/
-config.env
+config/
+dist
