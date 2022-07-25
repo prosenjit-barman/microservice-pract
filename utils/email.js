@@ -58,7 +58,7 @@ module.exports = class Email {
     }
     //Welcome Email send function
     async sendWelcome() {
-        await this.send('Welcome', 'Howdy! Heartiest Welcome!');
+        await this.send('welcome', 'Howdy! Heartiest Welcome!');
     }
 
     //Password Reset Email send function
