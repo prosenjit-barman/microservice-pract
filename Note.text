@@ -481,3 +481,5 @@ need to comment out the console.log to prevent poluting the log file.
 need to remove the localhost and port and leave the other things as they are if the API and backend hosted on same server. In case of different server, the hostname needs to be updated accordingly.
 
 WHile deploying in heroku, we can't use nodemon. We need replace it by node.
+
+x-forward-proto must needs to be secured so that it can send the jwt. Trust Proxy needed to be enabled in order to make the x-forwarded-protocol work.

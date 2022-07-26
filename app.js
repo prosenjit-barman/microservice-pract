@@ -18,6 +18,9 @@ const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 //require express
 const app = express();
+
+app.enable()
+
 app.set('view engine', 'pug'); //pug is used as template engine.
 app.set('views', path.join(__dirname, 'views')); //path.join will be used to specify the directory name
 
