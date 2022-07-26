@@ -1,0 +1,13 @@
+[1mdiff --git a/controllers/authController.js b/controllers/authController.js[m
+[1mindex 5dfa574..a15a73b 100644[m
+[1m--- a/controllers/authController.js[m
+[1m+++ b/controllers/authController.js[m
+[36m@@ -217,7 +217,7 @@[m [mexports.updatePassword = catchAsync( async (req, res, next) => {[m
+     }[m
+     // 3) If so, update Password[m
+     user.password = req.body.password;[m
+[31m-    user.passwordConfirm = req.body.passwordConfirm;[m
+[32m+[m[32m    user.passwordConfirm = req.body.passwordConfir;[m
+     await user.save();[m
+ [m
+     // 4) Log user in, send JWT[m
