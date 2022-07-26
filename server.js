@@ -63,3 +63,10 @@ process.on('unhandledRejection', err => {
   });//giving time to execute the background process then stopping the server
 
 });
+
+process.on('SIGTERM',() => {
+  console.log('SIGTERM RECIEVED. Shutting Down Gracefullu❗');
+  server.close(() => {
+    console.log('Process Terminated!');
+  })
+})
