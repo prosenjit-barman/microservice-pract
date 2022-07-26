@@ -57,5 +57,5 @@
   "engines": {
     "node": "12.13.x"
   },
-  "optionalDependencies": { "fsevents": "*" }
+  "optionalDependencies": { "fsevents": "^1.2.7" }
 }
