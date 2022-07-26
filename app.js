@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const cors = require('cors');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
@@ -29,6 +30,20 @@ app.set('views', path.join(__dirname, 'views')); //path.join will be used to spe
 app.use(express.static(path.join(__dirname, 'public'))); //Public folder is already set to root
 
 // 1) GLOBAL MIDDLEWARES
+
+//Implementing CORS
+app.use(cors()); //CORS() will only work for simple request like GET and POST. 
+
+//Access-control-allow-origin
+// api.domain.com -> domain.com
+// app.use(cors({
+//   origin: 'https://www.domain.com'
+// }))
+
+//To allow the non simple requests also.
+app.options('*', cors());
+// app.options('/api/v1/tours/:id', cors());
+
 //Important security HTTP Header
 app.use(helmet());
 
