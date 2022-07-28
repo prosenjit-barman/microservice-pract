@@ -486,3 +486,6 @@ x-forward-proto must needs to be secured so that it can send the jwt. Trust Prox
 
 Sigterm signal: config for heroku dyno. container shut down after 24 hours on heroku.
 CORS: Cross Origin Resource Sharing
+
+Webhook and endpoint: a url which stripe will auto sent post request to whenever a checkout is succesfully completed. Whenever a payment is completed.
+Then stripe will send the original session data to complete the checkout session.

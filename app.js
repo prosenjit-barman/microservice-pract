@@ -16,6 +16,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 //require express
 const app = express();
@@ -62,9 +63,14 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
+app.post('/webhook-checkout', 
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+)
+
 //Defining Middleware
 //Body Parser. Reading data from body into req.body
-app.use(express.json( { limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted. Parses data from bodies
+app.use(express.json({ limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted. Parses data from bodies
 app.use(express.urlencoded( { extended: true, limit: '10kb' })); //express.json is middleware. It is a function that can modify incoming request data. It stands between middle of the request and response. Body data larger than 10Kb will not be accepted. Parses data from bodies
 app.use(cookieParser()); //parses data from cookies
 

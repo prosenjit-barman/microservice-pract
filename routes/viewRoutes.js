@@ -15,7 +15,10 @@ const router = express.Router();
 //   }); //specifying pug template. It will go directly to the views folder and check for the file and then ender the file.
   
   //Route for all pages
-  router.get('/', bookingController.createBookingCheckout, authController.isLoggedIn, viewsController.getOverview);
+  router.get('/', 
+  //bookingController.createBookingCheckout, 
+  authController.isLoggedIn, 
+  viewsController.getOverview);
   router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
 
   // Login
