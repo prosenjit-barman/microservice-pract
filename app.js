@@ -64,10 +64,12 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
-app.post('/webhook-checkout', 
+// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
+app.post(
+  '/webhook-checkout',
   bodyParser.raw({ type: 'application/json' }),
   bookingController.webhookCheckout
-)
+);
 
 //Defining Middleware
 //Body Parser. Reading data from body into req.body
