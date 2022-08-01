@@ -19,6 +19,7 @@
     "a": "^2.1.2",
     "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -57,5 +58,7 @@
   "engines": {
     "node": "12.13.x"
   },
-  "optionalDependencies": { "fsevents": "2.1.2" }
+  "optionalDependencies": {
+    "fsevents": "2.1.2"
+  }
 }
