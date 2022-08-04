@@ -26,7 +26,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         // Line Items shows everything about the product
         /* Session Information Ends */
         /* Product Information Started */
-        display_items: [
+        line_items: [
             {
               name: `${tour.name} Tour`,
               description: tour.summary,
