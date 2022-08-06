@@ -7,7 +7,7 @@ const factory = require('./handlerFactory');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
-  const tour = await Tour.findById(req.params.tourId);
+  const tour = await Tour.findById(req.params.tourIds);
   // console.log(tour);
 
   // 2) Create checkout session
@@ -24,7 +24,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 
     customer_email: req.user.email,
 
-    client_reference_id: req.params.tourId,
+    client_reference_id: req.params.tourIds,
 
     line_items: [
       {
@@ -48,7 +48,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 const createBookingCheckout = async session => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const price = session.display_items[0].amount / 100;
+  const price = session.line_items[0].amount / 100;
   await Booking.create({ tour, user, price });
 };
 
