@@ -10,7 +10,7 @@ router.get('/checkout-session/:tourId', bookingController.getCheckoutSession);
 router.use(authController.restrictTo('admin', 'lead-guide'));
 
 router.route('/')
-.get(bookingController.getallBooking)
+.get(bookingController.getallBookings)
 .post(bookingController.createBooking);
 
 router.route('/:id')
