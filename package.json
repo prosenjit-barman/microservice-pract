@@ -1,7 +1,7 @@
 {
   "name": "natours",
   "version": "1.0.0",
-  "description": "Microservice learning ",
+  "description": "Microservice learning",
   "main": "app.js",
   "scripts": {
     "start": "node server.js",
